@@ -1,14 +1,11 @@
 # mybatis-generator-ext
 基于mybatis-generator-core的扩展，生成更合适的代码
 
-
 generatorConfig.xml 的配置
 
-<pre>
-
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
-<generatorConfiguration>
+<generatorConfiguration> -->
 	<!-- 数据库驱动包位置 配置在pom.xml文件中 -->
 	<context id="mysql" targetRuntime="MyBatis3" defaultModelType="flat">
 		<!-- 自定义xml格式 -->
@@ -60,8 +57,42 @@ generatorConfig.xml 的配置
 		</table>
 
 	</context>
-</generatorConfiguration>
+<!-- </generatorConfiguration> -->
 
 
+pom.xml 中的配置
 
-</pre>
+	<plugins>
+		...
+
+		<!-- generator插件 -->
+		<plugin>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-maven-plugin</artifactId>
+			<version>1.3.5</version>
+			<configuration>
+				<overwrite>true</overwrite>
+				<verbose>true</verbose>
+			</configuration>
+
+			<dependencies>
+				<dependency>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+					<version>5.1.42</version>
+				</dependency>
+
+				<!-- 自定义插件 -->
+				<dependency>
+					<groupId>com.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-ext</artifactId>
+                    <version>1.0.0-RELEASE</version>
+				</dependency>
+			</dependencies>
+		</plugin>
+	</plugins>
+
+
+maven 执行命令
+
+mvn mybatis-generator:generate
