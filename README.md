@@ -64,33 +64,33 @@ generatorConfig.xml 的配置
 pom.xml 中的配置
 
 	<plugins>
-		...
+        ...
 
-		<!-- generator插件 -->
-		<plugin>
-			<groupId>org.mybatis.generator</groupId>
-			<artifactId>mybatis-generator-maven-plugin</artifactId>
-			<version>1.3.5</version>
-			<configuration>
-				<overwrite>true</overwrite>
-				<verbose>true</verbose>
-			</configuration>
+        <!-- generator插件 -->
+        <plugin>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-maven-plugin</artifactId>
+            <version>1.3.5</version>
+            <configuration>
+                <overwrite>true</overwrite>
+                <verbose>true</verbose>
+            </configuration>
 
-			<dependencies>
-				<dependency>
-					<groupId>mysql</groupId>
-					<artifactId>mysql-connector-java</artifactId>
-					<version>5.1.42</version>
-				</dependency>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>5.1.42</version>
+                </dependency>
 
-				<!-- 自定义插件 -->
-				<dependency>
-					<groupId>com.mybatis.generator</groupId>
+                <!-- 自定义插件 -->
+                <dependency>
+                    <groupId>com.mybatis.generator</groupId>
                     <artifactId>mybatis-generator-ext</artifactId>
                     <version>1.0.0-RELEASE</version>
-				</dependency>
-			</dependencies>
-		</plugin>
+                </dependency>
+            </dependencies>
+        </plugin>
 	</plugins>
 
 
