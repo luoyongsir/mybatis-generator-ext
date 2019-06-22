@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+<!--<properties resource="application.properties" />-->
+
+<!-- 数据库驱动包位置 配置在pom.xml文件中 -->
+<context id="oracle" targetRuntime="MyBatis3" defaultModelType="flat">
+	<property name="javaFileEncoding" value="UTF-8"/>
+	<!-- 自定义xml格式 -->
+	<property name="xmlFormatter" value="com.mybatis.generator.api.dom.DefXmlFormatter" />
+	<!-- 自定义序列化id -->
+	<plugin type="com.mybatis.generator.plugins.DefSerializablePlugin"></plugin>
+	<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+
+	<plugin type="com.mybatis.generator.plugins.DefCommentPlugin" >
+		<property name="author" value="luoyong" />
+		<property name="dateFormat" value="yyyy/MM/dd HH:mm" />
+	</plugin>
+
+	<commentGenerator type="org.mybatis.generator.internal.DefaultCommentGenerator">
+		<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+		<property name="suppressAllComments" value="true" />
+	</commentGenerator>
+
+	<!-- 数据库链接URL、用户名、密码 -->
+	<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+					connectionURL="jdbc:oracle:thin:@xxx.xxx.xxx.xxx:1521:dbName" userId="userId" password="password" >
+		<!-- 针对oracle数据库 -->
+		<property name="remarksReporting" value="true"></property>
+	</jdbcConnection>
+
+	<!--<jdbcConnection driverClass="${jdbc.driver}" -->
+					<!--connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}" />-->
+
+	<!-- false：把 DECIMAL 和 NUMERIC 类型解析为 Short,Integer,Long -->
+	<!--  true：把 DECIMAL 和 NUMERIC 类型解析为 java.math.BigDecimal -->
+	<javaTypeResolver>
+		<property name="forceBigDecimals" value="false" />
+	</javaTypeResolver>
+
+	<!-- 生成模型的包名和位置 -->
+	<!--<javaModelGenerator targetPackage="com.mybatis.entity" targetProject="MBGTestProject/src/main/java">-->
+	<javaModelGenerator targetPackage="com.mybatis.entity" targetProject="./src/main/java">
+		<property name="enableSubPackages" value="true" />
+		<!-- 从数据库返回的值被清理前后的空格  -->
+		<property name="trimStrings" value="false" />
+	</javaModelGenerator>
+
+	<!-- 生成的映射文件包名和位置 -->
+	<sqlMapGenerator targetPackage="com.mybatis.mapper.oracle" targetProject="./src/main/java">
+		<property name="enableSubPackages" value="true" />
+	</sqlMapGenerator>
+
+	<!-- 生成Mapper的包名和位置 type="MIXEDMAPPER" -->
+	<javaClientGenerator type="XMLMAPPER" targetPackage="com.mybatis.mapper" targetProject="./src/main/java">
+		<property name="enableSubPackages" value="true" />
+	</javaClientGenerator>
+
+	<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
+	<!-- <table tableName="tableName" domainObjectName="domainObjectName" enableCountByExample="false"
+		   enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="fasle" selectByExampleQueryId="false">
+		<generatedKey column="ID" sqlStatement="SELECT ID_SEQ.NEXTVAL FROM DUAL"/>
+	</table> -->
+
+	<table tableName="tableNamePre%" enableCountByExample="false" enableDeleteByExample="false"
+		   enableSelectByExample="false" enableUpdateByExample="fasle" selectByExampleQueryId="false">
+		<generatedKey type="pre" column="ID" sqlStatement="SELECT ID_SEQ.NEXTVAL FROM DUAL"></generatedKey>
+	</table>
+
+</context>
+</generatorConfiguration>
