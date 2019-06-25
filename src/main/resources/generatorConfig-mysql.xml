@@ -9,7 +9,7 @@
 	<!-- 自定义序列化id -->
 	<plugin type="com.mybatis.generator.plugins.DefSerializablePlugin"></plugin>
 	<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
-
+	<!-- 自定义接口、实体类、属性的注释 -->
 	<plugin type="com.mybatis.generator.plugins.DefCommentPlugin" >
 		<property name="author" value="luoyong" />
 		<property name="dateFormat" value="yyyy/MM/dd HH:mm" />
