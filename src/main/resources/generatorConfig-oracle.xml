@@ -57,7 +57,7 @@
 		<property name="enableSubPackages" value="true" />
 	</javaClientGenerator>
 
-	<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
+	<!-- 要生成哪些表(更改tableName和domainObjectName就可以) -->
 	<!-- <table tableName="tableName" domainObjectName="domainObjectName" enableCountByExample="false"
 		   enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="fasle" selectByExampleQueryId="false">
 		<generatedKey column="ID" sqlStatement="SELECT ID_SEQ.NEXTVAL FROM DUAL"/>
