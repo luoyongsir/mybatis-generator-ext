@@ -20,11 +20,10 @@
 		<property name="suppressAllComments" value="true" />
 	</commentGenerator>
 
-	<!-- 数据库链接URL、用户名、密码 -->
+	<!-- 数据库链接URL、用户名、密码；新版driverClass是 com.mysql.cj.jdbc.Driver -->
 	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
 					connectionURL="jdbc:mysql://xxx.xxx.xxx.xxx:3306/dbName" userId="userId" password="password" >
-		<!-- 如果获取不到字段注释，尝试放开注释 -->
-		<!--<property name="useInformationSchema" value="true"></property>-->
+		<property name="useInformationSchema" value="true" />
 	</jdbcConnection>
 
 	<!-- false：把 DECIMAL 和 NUMERIC 类型解析为 Short,Integer,Long -->
