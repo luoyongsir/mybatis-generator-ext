@@ -9,10 +9,11 @@
 	<property name="javaFileEncoding" value="UTF-8"/>
 	<!-- 自定义xml格式 -->
 	<property name="xmlFormatter" value="com.mybatis.generator.api.dom.DefXmlFormatter" />
-	<!-- 自定义序列化id -->
+	<!-- 生成mapper.xml 时覆盖原文件 -->
+	<plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+	<!-- 自定义实体类序列化id -->
 	<plugin type="com.mybatis.generator.plugins.DefSerializablePlugin"></plugin>
-	<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
-	<!-- 自定义接口、实体类、属性的注释 -->
+	<!-- 自定义接口、实体类、属性的注释和swagger注解 -->
 	<plugin type="com.mybatis.generator.plugins.DefCommentPlugin" >
 		<property name="author" value="luoyong" />
 		<property name="dateFormat" value="yyyy/MM/dd HH:mm" />
@@ -40,20 +41,20 @@
 	</javaTypeResolver>
 
 	<!-- 生成模型的包名和位置 -->
-	<!--<javaModelGenerator targetPackage="com.mybatis.entity" targetProject="MBGTestProject/src/main/java">-->
-	<javaModelGenerator targetPackage="com.mybatis.entity" targetProject="./src/main/java">
+	<!--<javaModelGenerator targetPackage="com.mybatis.output.entity" targetProject="MBGTestProject/src/main/java">-->
+	<javaModelGenerator targetPackage="com.mybatis.output.entity" targetProject="./src/main/java">
 		<property name="enableSubPackages" value="true" />
 		<!-- 从数据库返回的值被清理前后的空格  -->
 		<property name="trimStrings" value="false" />
 	</javaModelGenerator>
 
 	<!-- 生成的映射文件包名和位置 -->
-	<sqlMapGenerator targetPackage="com.mybatis.mapper.oracle" targetProject="./src/main/java">
+	<sqlMapGenerator targetPackage="com.mybatis.output.mapper.oracle" targetProject="./src/main/java">
 		<property name="enableSubPackages" value="true" />
 	</sqlMapGenerator>
 
 	<!-- 生成Mapper的包名和位置 type="MIXEDMAPPER" -->
-	<javaClientGenerator type="XMLMAPPER" targetPackage="com.mybatis.mapper" targetProject="./src/main/java">
+	<javaClientGenerator type="XMLMAPPER" targetPackage="com.mybatis.output.mapper" targetProject="./src/main/java">
 		<property name="enableSubPackages" value="true" />
 	</javaClientGenerator>
 
