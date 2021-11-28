@@ -60,7 +60,7 @@ public class DefSerializablePlugin extends PluginAdapter {
         return true;
     }
 
-    protected void makeSerializable(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+    private void makeSerializable(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         if (addGWTInterface) {
             topLevelClass.addImportedType(gwtSerializable);
             topLevelClass.addSuperInterface(gwtSerializable);
@@ -73,7 +73,13 @@ public class DefSerializablePlugin extends PluginAdapter {
             field.setInitializationString(randomUid());
             field.setStatic(true);
             field.setVisibility(JavaVisibility.PRIVATE);
-            context.getCommentGenerator().addFieldComment(field, introspectedTable);
+
+            if (introspectedTable.getTargetRuntime() == IntrospectedTable.TargetRuntime.MYBATIS3_DSQL) {
+                context.getCommentGenerator().addFieldAnnotation(field, introspectedTable,
+                    topLevelClass.getImportedTypes());
+            } else {
+                context.getCommentGenerator().addFieldComment(field, introspectedTable);
+            }
             topLevelClass.addField(field);
         }
     }
