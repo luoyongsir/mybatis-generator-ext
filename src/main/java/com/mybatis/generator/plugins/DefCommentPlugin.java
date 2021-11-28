@@ -40,10 +40,8 @@ public class DefCommentPlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean modelFieldGenerated(Field field,
-                                       TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
-                                       IntrospectedTable introspectedTable,
-                                       Plugin.ModelClassType modelClassType) {
+    public boolean modelFieldGenerated(Field field, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+                                       IntrospectedTable introspectedTable, Plugin.ModelClassType modelClassType) {
         // 属性注释
         String remarks = introspectedColumn.getRemarks();
         if (StringUtility.stringHasValue(remarks)) {
@@ -53,12 +51,13 @@ public class DefCommentPlugin extends PluginAdapter {
             }
         }
 
+        // 属性swagger
+        field.addAnnotation("@Schema(name = \"" + (StringUtility.stringHasValue(remarks) ? remarks : field.getName()) + "\")");
         return true;
     }
 
     @Override
-    public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
-                                                 IntrospectedTable introspectedTable) {
+    public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         String table = introspectedTable.getFullyQualifiedTable().toString();
         // 实体类注释
         topLevelClass.addJavaDocLine("/**");
@@ -77,13 +76,30 @@ public class DefCommentPlugin extends PluginAdapter {
         topLevelClass.addJavaDocLine(" * @date " + getDateString());
         topLevelClass.addJavaDocLine(" */");
 
+        addModelClassAnnotations(topLevelClass, StringUtility.stringHasValue(tableRemarks) ? tableRemarks : table);
         return true;
     }
 
+    /**
+     * 使用lombok
+     */
     @Override
-    public boolean clientGenerated(Interface interfaze,
-                                   TopLevelClass topLevelClass,
-                                   IntrospectedTable introspectedTable) {
+    public boolean modelSetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+                                              IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+        return false;
+    }
+
+    /**
+     * 使用lombok
+     */
+    @Override
+    public boolean modelGetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+                                              IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+        return false;
+    }
+
+    @Override
+    public boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable) {
         String table = introspectedTable.getFullyQualifiedTable().toString();
         // 接口注释
         interfaze.addJavaDocLine("/**");
@@ -151,4 +167,18 @@ public class DefCommentPlugin extends PluginAdapter {
         SimpleDateFormat format = new SimpleDateFormat(dateFormat);
         return format.format(new Date());
     }
+
+    private void addModelClassAnnotations(TopLevelClass topLevelClass, String tableRemarks) {
+        // 添加实体的import
+        topLevelClass.addImportedType("io.swagger.v3.oas.annotations.media.Schema");
+        topLevelClass.addImportedType("lombok.Getter");
+        topLevelClass.addImportedType("lombok.Setter");
+        topLevelClass.addImportedType("lombok.ToString");
+        // 添加实体的注解
+        topLevelClass.addAnnotation("@Getter");
+        topLevelClass.addAnnotation("@Setter");
+        topLevelClass.addAnnotation("@ToString");
+        topLevelClass.addAnnotation("@Schema(name = \"" + tableRemarks + "\")");
+    }
+
 }
