@@ -58,26 +58,12 @@ public class DefCommentPlugin extends PluginAdapter {
 
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        String table = introspectedTable.getFullyQualifiedTable().toString();
-        // 实体类注释
-        topLevelClass.addJavaDocLine("/**");
-        topLevelClass.addJavaDocLine(" * This class corresponds to the database table " + table);
+        return modelClassGenerated(topLevelClass, introspectedTable, true);
+    }
 
-        String tableRemarks = introspectedTable.getRemarks();
-        if (StringUtility.stringHasValue(tableRemarks)) {
-            topLevelClass.addJavaDocLine(" * Database Table Remarks:");
-            String[] remarkLines = tableRemarks.split(System.getProperty("line.separator"));
-            for (String remarkLine : remarkLines) {
-                topLevelClass.addJavaDocLine(" *   " + remarkLine);
-            }
-            topLevelClass.addJavaDocLine(" *");
-        }
-        topLevelClass.addJavaDocLine(" * @author " + author);
-        topLevelClass.addJavaDocLine(" * @date " + getDateString());
-        topLevelClass.addJavaDocLine(" */");
-
-        addModelClassAnnotations(topLevelClass, StringUtility.stringHasValue(tableRemarks) ? tableRemarks : table);
-        return true;
+    @Override
+    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        return modelClassGenerated(topLevelClass, introspectedTable, false);
     }
 
     /**
@@ -166,6 +152,31 @@ public class DefCommentPlugin extends PluginAdapter {
     private String getDateString() {
         SimpleDateFormat format = new SimpleDateFormat(dateFormat);
         return format.format(new Date());
+    }
+
+    private boolean modelClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable, boolean needClassAnnotations) {
+        String table = introspectedTable.getFullyQualifiedTable().toString();
+        // 实体类注释
+        topLevelClass.addJavaDocLine("/**");
+        topLevelClass.addJavaDocLine(" * This class corresponds to the database table " + table);
+
+        String tableRemarks = introspectedTable.getRemarks();
+        if (StringUtility.stringHasValue(tableRemarks)) {
+            topLevelClass.addJavaDocLine(" * Database Table Remarks:");
+            String[] remarkLines = tableRemarks.split(System.getProperty("line.separator"));
+            for (String remarkLine : remarkLines) {
+                topLevelClass.addJavaDocLine(" *   " + remarkLine);
+            }
+            topLevelClass.addJavaDocLine(" *");
+        }
+        topLevelClass.addJavaDocLine(" * @author " + author);
+        topLevelClass.addJavaDocLine(" * @date " + getDateString());
+        topLevelClass.addJavaDocLine(" */");
+
+        if (needClassAnnotations) {
+            addModelClassAnnotations(topLevelClass, StringUtility.stringHasValue(tableRemarks) ? tableRemarks : table);
+        }
+        return true;
     }
 
     private void addModelClassAnnotations(TopLevelClass topLevelClass, String tableRemarks) {
