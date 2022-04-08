@@ -52,7 +52,7 @@ public class DefCommentPlugin extends PluginAdapter {
         }
 
         // 属性swagger
-        field.addAnnotation("@Schema(name = \"" + (StringUtility.stringHasValue(remarks) ? remarks : field.getName()) + "\")");
+        field.addAnnotation("@Schema(description = \"" + (StringUtility.stringHasValue(remarks) ? remarks : field.getName()) + "\")");
         return true;
     }
 
@@ -189,7 +189,7 @@ public class DefCommentPlugin extends PluginAdapter {
         topLevelClass.addAnnotation("@Getter");
         topLevelClass.addAnnotation("@Setter");
         topLevelClass.addAnnotation("@ToString");
-        topLevelClass.addAnnotation("@Schema(name = \"" + tableRemarks + "\")");
+        topLevelClass.addAnnotation("@Schema(description = \"" + tableRemarks + "\")");
     }
 
 }
