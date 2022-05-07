@@ -8,9 +8,9 @@
 	<property name="xmlFormatter" value="com.mybatis.generator.api.dom.DefXmlFormatter" />
 
     <!-- 生成代码的包路径 -->
-    <property name="targetPackage" value="com.mybatis.output"/>
+    <property name="targetPackage" value="com.audaque.cloud.nanan.ioc"/>
     <!-- 生成代码的文件，可以是相对路径如： ./src/main/java 或绝对路径 D:\\Workspace\\tmp\\src\\main\\java -->
-    <property name="targetProject" value="./src/main/java"/>
+    <property name="targetProject" value="D:\\Workspace\\Audaque\\GitLab\\nanan-ioc\\nanan-ioc-service\\src\\main\\java"/>
     <!-- 自定义接口、实体类、属性的注释和swagger注解 -->
     <plugin type="com.mybatis.generator.plugins.DefCommentPlugin" >
         <property name="author" value="luoyong" />
@@ -29,7 +29,7 @@
 
 	<!-- 数据库链接URL、用户名、密码；旧版driverClass是 com.mysql.jdbc.Driver -->
 	<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                    connectionURL="jdbc:mysql://xxx.xxx.xxx.xxx:3306/dbName" userId="userId" password="password" >
+                    connectionURL="jdbc:mysql://172.16.1.5:3306/nanan_ioc" userId="root" password="password" >
 		<property name="useInformationSchema" value="true" />
 	</jdbcConnection>
 
@@ -40,7 +40,7 @@
 	</javaTypeResolver>
 
 	<!-- 生成模型的包名和位置 -->
-    <javaModelGenerator targetPackage="${targetPackage}.entity" targetProject="${targetProject}">
+    <javaModelGenerator targetPackage="${targetPackage}.model.entity" targetProject="${targetProject}">
 		<property name="enableSubPackages" value="true" />
 		<!-- 从数据库返回的值被清理前后的空格  -->
 		<property name="trimStrings" value="false" />
@@ -62,7 +62,7 @@
 		<generatedKey column="ID" sqlStatement="JDBC"/>
 	</table> -->
 
-    <table tableName="tableNamePre%" enableCountByExample="false" enableDeleteByExample="false"
+    <table tableName="t_naq_dsjj_czrk%" enableCountByExample="false" enableDeleteByExample="false"
 		   enableSelectByExample="false" enableUpdateByExample="fasle" selectByExampleQueryId="false">
 		<generatedKey column="ID" sqlStatement="JDBC"/>
 	</table>
