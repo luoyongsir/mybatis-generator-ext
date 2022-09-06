@@ -2,8 +2,11 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 
-<context id="mysql" targetRuntime="MyBatis3" defaultModelType="flat">
-    <property name="javaFileEncoding" value="UTF-8"/>
+<!--<properties resource="application.properties" />-->
+
+<!-- 数据库驱动包位置 配置在pom.xml文件中 -->
+<context id="oracle" targetRuntime="MyBatis3" defaultModelType="flat">
+	<property name="javaFileEncoding" value="UTF-8"/>
 	<!-- 自定义xml格式 -->
 	<property name="xmlFormatter" value="com.mybatis.generator.api.dom.DefXmlFormatter" />
 
@@ -27,11 +30,15 @@
 		<property name="suppressAllComments" value="true" />
 	</commentGenerator>
 
-	<!-- 数据库链接URL、用户名、密码；旧版driverClass是 com.mysql.jdbc.Driver -->
-	<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                    connectionURL="jdbc:mysql://xxx.xxx.xxx.xxx:3306/dbName" userId="userId" password="password" >
-		<property name="useInformationSchema" value="true" />
+	<!-- 数据库链接URL、用户名、密码 -->
+	<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+					connectionURL="jdbc:oracle:thin:@xxx.xxx.xxx.xxx:1521:dbName" userId="userId" password="password" >
+		<!-- 针对oracle数据库 -->
+		<property name="remarksReporting" value="true"></property>
 	</jdbcConnection>
+
+	<!--<jdbcConnection driverClass="${jdbc.driver}" -->
+					<!--connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}" />-->
 
 	<!-- false：把 DECIMAL 和 NUMERIC 类型解析为 Short,Integer,Long -->
 	<!--  true：把 DECIMAL 和 NUMERIC 类型解析为 java.math.BigDecimal -->
@@ -59,12 +66,12 @@
 	<!-- 要生成哪些表(更改tableName和domainObjectName就可以) -->
 	<!-- <table tableName="tableName" domainObjectName="domainObjectName" enableCountByExample="false"
 		   enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="fasle" selectByExampleQueryId="false">
-		<generatedKey column="ID" sqlStatement="JDBC"/>
+		<generatedKey column="ID" sqlStatement="SELECT ID_SEQ.NEXTVAL FROM DUAL"/>
 	</table> -->
 
-    <table tableName="tableNamePre%" enableCountByExample="false" enableDeleteByExample="false"
+	<table tableName="tableNamePre%" enableCountByExample="false" enableDeleteByExample="false"
 		   enableSelectByExample="false" enableUpdateByExample="fasle" selectByExampleQueryId="false">
-		<generatedKey column="ID" sqlStatement="JDBC"/>
+		<generatedKey type="pre" column="ID" sqlStatement="SELECT ID_SEQ.NEXTVAL FROM DUAL"></generatedKey>
 	</table>
 
 </context>
