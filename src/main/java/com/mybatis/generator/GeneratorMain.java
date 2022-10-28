@@ -28,9 +28,13 @@ public class GeneratorMain {
 	private static final Logger LOG = Logger.getLogger(GeneratorMain.class.getName());
 	private static final String TARGET_PACKAGE = "targetPackage";
 	private static final String TARGET_PROJECT = "targetProject";
+	/**
+	 * mysql,oracle,sqlserver
+	 */
+	private static final String DB_TYPE = "mysql";
 
 	public static void main(String[] args) {
-		try (InputStream is = getDefaultClassLoader().getResourceAsStream("generatorConfig-mysql.xml")) {
+		try (InputStream is = getDefaultClassLoader().getResourceAsStream("generatorConfig-" + DB_TYPE + ".xml")) {
 			List<String> warnings = new ArrayList<>();
 			ConfigurationParser cp = new ConfigurationParser(warnings);
 			Configuration config = cp.parseConfiguration(is);
@@ -57,16 +61,12 @@ public class GeneratorMain {
 			sql.setTargetProject(sql.getTargetProject().replace("${" + TARGET_PROJECT + "}", targetProject));
 
 			JavaModelGeneratorConfiguration javaModel = context.getJavaModelGeneratorConfiguration();
-			javaModel.setTargetPackage(
-					javaModel.getTargetPackage().replace("${" + TARGET_PACKAGE + "}", targetPackage));
-			javaModel.setTargetProject(
-					javaModel.getTargetProject().replace("${" + TARGET_PROJECT + "}", targetProject));
+			javaModel.setTargetPackage(javaModel.getTargetPackage().replace("${" + TARGET_PACKAGE + "}", targetPackage));
+			javaModel.setTargetProject(javaModel.getTargetProject().replace("${" + TARGET_PROJECT + "}", targetProject));
 
 			JavaClientGeneratorConfiguration javaClient = context.getJavaClientGeneratorConfiguration();
-			javaClient.setTargetPackage(
-					javaClient.getTargetPackage().replace("${" + TARGET_PACKAGE + "}", targetPackage));
-			javaClient.setTargetProject(
-					javaClient.getTargetProject().replace("${" + TARGET_PROJECT + "}", targetProject));
+			javaClient.setTargetPackage(javaClient.getTargetPackage().replace("${" + TARGET_PACKAGE + "}", targetPackage));
+			javaClient.setTargetProject(javaClient.getTargetProject().replace("${" + TARGET_PROJECT + "}", targetProject));
 		}
 	}
 
