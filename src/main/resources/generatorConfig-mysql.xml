@@ -9,8 +9,8 @@
 
     <!-- 生成代码的包路径 -->
     <property name="targetPackage" value="com.mybatis.output"/>
-    <!-- 生成代码的文件，可以是相对路径如： ./src/main/java 或绝对路径 D:\\Workspace\\tmp\\src\\main\\java -->
-    <property name="targetProject" value="./src/main/java"/>
+    <!-- 生成代码的文件，可以是相对路径如： ./src 或绝对路径 D:\\Workspace\\tmp\\src -->
+    <property name="targetProject" value="./src"/>
     <!-- 自定义接口、实体类、属性的注释和swagger注解 -->
     <plugin type="com.mybatis.generator.plugins.DefCommentPlugin" >
         <property name="author" value="luoyong" />
@@ -40,19 +40,19 @@
 	</javaTypeResolver>
 
 	<!-- 生成模型的包名和位置 -->
-    <javaModelGenerator targetPackage="${targetPackage}.entity" targetProject="${targetProject}">
+    <javaModelGenerator targetPackage="main.java.${targetPackage}.entity" targetProject="${targetProject}">
 		<property name="enableSubPackages" value="true" />
 		<!-- 从数据库返回的值被清理前后的空格  -->
 		<property name="trimStrings" value="false" />
 	</javaModelGenerator>
 
 	<!-- 生成的映射文件包名和位置 -->
-    <sqlMapGenerator targetPackage="${targetPackage}.mapper.mysql" targetProject="${targetProject}">
+    <sqlMapGenerator targetPackage="main.resources.mapper.mysql" targetProject="${targetProject}">
 		<property name="enableSubPackages" value="true" />
 	</sqlMapGenerator>
 
 	<!-- 生成Mapper的包名和位置 type="MIXEDMAPPER" -->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="${targetPackage}.mapper" targetProject="${targetProject}">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="main.java.${targetPackage}.mapper" targetProject="${targetProject}">
 		<property name="enableSubPackages" value="true" />
 	</javaClientGenerator>
 
